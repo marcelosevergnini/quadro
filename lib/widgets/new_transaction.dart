@@ -23,7 +23,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
     final newAmount = double.parse(this.amoutController.text);
 
-    if (newTitle.isEmpty || newAmount <= 0  || _selectedDate == null) {
+    if (newTitle.isEmpty || newAmount <= 0 || _selectedDate == null) {
       return;
     }
     widget.onAddTransaction(newTitle, newAmount, this._selectedDate);
@@ -48,51 +48,58 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              autocorrect: true,
-              decoration: InputDecoration(labelText: "Title"),
-              controller: this.titleController,
-              onSubmitted: (_) => this._submitEntry(),
-            ),
-            TextField(
-              autocorrect: true,
-              decoration: InputDecoration(labelText: "Amount"),
-              controller: this.amoutController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              onSubmitted: (_) => this._submitEntry(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                      child: this._selectedDate == null
-                          ? Text('No Date Chosen')
-                          : Text('Picked Date - ${DateFormat.yMEd().format(this._selectedDate)}')),
-                  FlatButton(
-                      textColor: Theme.of(context).primaryColor,
-                      onPressed: _presentDatePicker,
-                      child: Text(
-                        'Select a Date',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ))
-                ],
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                autocorrect: true,
+                decoration: InputDecoration(labelText: "Title"),
+                controller: this.titleController,
+                onSubmitted: (_) => this._submitEntry(),
               ),
-            ),
-            RaisedButton(
-              onPressed: this._submitEntry,
-              child: Text("Add"),
-              color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).textTheme.button.color,
-            )
-          ],
+              TextField(
+                autocorrect: true,
+                decoration: InputDecoration(labelText: "Amount"),
+                controller: this.amoutController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => this._submitEntry(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: this._selectedDate == null
+                            ? Text('No Date Chosen')
+                            : Text(
+                                'Picked Date - ${DateFormat.yMEd().format(this._selectedDate)}')),
+                    FlatButton(
+                        textColor: Theme.of(context).primaryColor,
+                        onPressed: _presentDatePicker,
+                        child: Text(
+                          'Select a Date',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ))
+                  ],
+                ),
+              ),
+              RaisedButton(
+                onPressed: this._submitEntry,
+                child: Text("Add"),
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).textTheme.button.color,
+              )
+            ],
+          ),
         ),
       ),
     );
