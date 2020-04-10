@@ -8,7 +8,7 @@ import 'package:quadro/widgets/adaptive_flat_button.dart';
 class NewTransaction extends StatefulWidget {
   final Function onAddTransaction;
 
-  NewTransaction(this.onAddTransaction);
+  const NewTransaction(this.onAddTransaction);
 
   @override
   _NewTransactionState createState() => _NewTransactionState();
@@ -74,7 +74,7 @@ class _NewTransactionState extends State<NewTransaction> {
                     )
                   : TextField(
                       autocorrect: true,
-                      decoration: InputDecoration(labelText: "Title"),
+                      decoration: const InputDecoration(labelText: "Title"),
                       controller: this.titleController,
                       onSubmitted: (_) => this._submitEntry(),
                     ),
@@ -84,15 +84,15 @@ class _NewTransactionState extends State<NewTransaction> {
                       autocorrect: true,
                       controller: this.amoutController,
                       keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       onSubmitted: (_) => this._submitEntry(),
                     )
                   : TextField(
                       autocorrect: true,
-                      decoration: InputDecoration(labelText: "Amount"),
+                      decoration: const InputDecoration(labelText: "Amount"),
                       controller: this.amoutController,
                       keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       onSubmitted: (_) => this._submitEntry(),
                     ),
               Container(
@@ -101,7 +101,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   children: <Widget>[
                     Expanded(
                         child: this._selectedDate == null
-                            ? Text('No Date Chosen')
+                            ? const Text('No Date Chosen')
                             : Text(
                                 'Picked Date - ${DateFormat.yMEd().format(this._selectedDate)}')),
                     AdaptiveFlatButton('Chose a Date', _presentDatePicker),
@@ -110,7 +110,7 @@ class _NewTransactionState extends State<NewTransaction> {
               ),
               RaisedButton(
                 onPressed: this._submitEntry,
-                child: Text("Add"),
+                child: const Text("Add"),
                 color: Theme.of(context).primaryColor,
                 textColor: Theme.of(context).textTheme.button.color,
               )
