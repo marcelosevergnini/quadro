@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:quadro/widgets/adaptive_flat_button.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function onAddTransaction;
@@ -31,6 +35,7 @@ class _NewTransactionState extends State<NewTransaction> {
   }
 
   void _presentDatePicker() {
+    
     showDatePicker(
             context: this.context,
             initialDate: DateTime.now(),
@@ -60,19 +65,36 @@ class _NewTransactionState extends State<NewTransaction> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              TextField(
-                autocorrect: true,
-                decoration: InputDecoration(labelText: "Title"),
-                controller: this.titleController,
-                onSubmitted: (_) => this._submitEntry(),
-              ),
-              TextField(
-                autocorrect: true,
-                decoration: InputDecoration(labelText: "Amount"),
-                controller: this.amoutController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onSubmitted: (_) => this._submitEntry(),
-              ),
+              Platform.isIOS
+                  ? CupertinoTextField(
+                      placeholder: 'Title',
+                      autocorrect: true,
+                      controller: this.titleController,
+                      onSubmitted: (_) => this._submitEntry(),
+                    )
+                  : TextField(
+                      autocorrect: true,
+                      decoration: InputDecoration(labelText: "Title"),
+                      controller: this.titleController,
+                      onSubmitted: (_) => this._submitEntry(),
+                    ),
+              Platform.isIOS
+                  ? CupertinoTextField(
+                      placeholder: 'Amount',
+                      autocorrect: true,
+                      controller: this.amoutController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      onSubmitted: (_) => this._submitEntry(),
+                    )
+                  : TextField(
+                      autocorrect: true,
+                      decoration: InputDecoration(labelText: "Amount"),
+                      controller: this.amoutController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      onSubmitted: (_) => this._submitEntry(),
+                    ),
               Container(
                 height: 70,
                 child: Row(
@@ -82,13 +104,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             ? Text('No Date Chosen')
                             : Text(
                                 'Picked Date - ${DateFormat.yMEd().format(this._selectedDate)}')),
-                    FlatButton(
-                        textColor: Theme.of(context).primaryColor,
-                        onPressed: _presentDatePicker,
-                        child: Text(
-                          'Select a Date',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
+                    AdaptiveFlatButton('Chose a Date', _presentDatePicker),
                   ],
                 ),
               ),
